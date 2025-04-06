@@ -1,0 +1,225 @@
+{
+  "name": "Label-Gmail_Emails",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -380,
+        -80
+      ],
+      "id": "5afc1b76-230e-41e9-a526-cf53893b6ee4",
+      "name": "Classifier",
+      "notesInFlow": false,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "4jhZlrmiAebLK0p1",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $json.id }}",
+        "simple": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -140,
+        -80
+      ],
+      "id": "bdfa66d6-3f9f-47d9-b83b-199f8fe8debb",
+      "name": "Gmail",
+      "webhookId": "47f0f841-1a59-4693-a742-f2ef664c9b4c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "4jhZlrmiAebLK0p1",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process each input item and output only the plaintext property.\nreturn items.map(item => {\n    let html = item.json.html;\n\n    // Remove <style> tags and their content.\n    html = html.replace(/<style[\\S\\s]*?<\\/style>/gi, '');\n\n    // Remove <script> tags and their content.\n    html = html.replace(/<script[\\S\\s]*?<\\/script>/gi, '');\n\n    // Remove HTML comments.\n    html = html.replace(/<!--[\\S\\s]*?-->/g, '');\n\n    // Remove all remaining HTML tags.\n    let plainText = html.replace(/(<[^>]+>)/g, '');\n\n    // Replace multiple spaces/newlines with a single space and trim.\n    plainText = plainText.replace(/\\s+/g, ' ').trim();\n\n    // Return a new object with only the plainText variable.\n    return { json: { plainText } };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        40,
+        -80
+      ],
+      "id": "fa29bab0-69dc-4aa8-9a53-a57712a097db",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<plain text>\n{{ $json.plainText }}\n</palin text>\n",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You receive plain text from an email, and it's your role to classify that email into one of three categories.\n\nThe three categories are:\n- work label: 'Label_3689698987642494400'\n- personal label: 'Label_7371106707349345566'\n- spam label: 'SPAM'\n\nWork is anything involving work.\n\nPersonal is anything that's personal.\n\nSpam is newsletters, or anything that is not applicable to me directly and it's just a mass message.\n\nplease show the label in the output"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        320,
+        -80
+      ],
+      "id": "50a33554-dec9-4944-9f76-baa256ffad26",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-pro-exp-02-05",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        340,
+        100
+      ],
+      "id": "5970d994-598e-4fcc-950f-040c1b6ecfdb",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "1c7kq3mQKJtBkq8i",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"category\": \"Label_7371106707349345566/SPAM/Label_1683202918102686027\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        500,
+        180
+      ],
+      "id": "ef341ea6-dd16-4c0f-899c-469425a5d098",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Classifier').item.json.id }}",
+        "labelIds": "={{ $json.output.category }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        960,
+        -80
+      ],
+      "id": "cbb46c5b-f68b-496c-ab1f-0427b8e18f7e",
+      "name": "Gmail1",
+      "webhookId": "8c945885-6c50-4462-a27b-09f73e704335",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "4jhZlrmiAebLK0p1",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Classifier": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "439987f0-6d91-4c10-8d11-538c2a8563b4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b0060a8558a0f5959de790d397e919d6e6774ec2b2dd94abff8c8a712817260f"
+  },
+  "id": "x1qsDvl9Atz1TvlL",
+  "tags": []
+}
