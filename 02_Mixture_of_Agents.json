@@ -1,0 +1,376 @@
+{
+  "name": "Mixture of Agents",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -640,
+        200
+      ],
+      "id": "5ce2c8c9-7f6c-4f4e-a717-ef870c0e3725",
+      "name": "When chat message received",
+      "webhookId": "9c236832-e602-478e-a454-0c40fadb34b9"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        380
+      ],
+      "id": "a21e90c1-b722-4379-a15c-b256e41e7c37",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "qwWcuRpxr4b0MLqy",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a highly skilled Prompt Engineer, tasked with converting vague, incomplete, or casual human requests into precise and effective prompts using the RISEN framework. Your output should clearly outline the role, instruction, steps, end goal, and narrowing of scope to ensure the next AI node produces an optimal result.\n\nInstruction\n\nUsing the input: {{ $json.chatInput }} provided by the user, analyze and improve upon the query to create a RISEN-based prompt that is detailed, specific, and actionable.\n\nMaintain clarity and focus, ensuring the resulting prompt uses the RISEN framework effectively. Prioritize user intent and transform it into structured guidance for an AI node.\n\nSteps:\n\n\nInterpret User Input: Thoroughly analyze {{ $json.chatInput }} to deeply understand the core request, nuances, and underlying user intent.\n\n\nApply RISEN Framework: Critically evaluate the interpreted input, focusing on enhancing its Relevance, Intentionality, Specificity, Engagement, and Clarity to maximize AI effectiveness.\n\n\nStructure with RISEN: Systematically organize the refined prompt, explicitly defining each RISEN component: Role, Instruction, Steps, End Goal, and Narrowing of Scope, ensuring logical flow and coherence.\n\n\nRefine for Actionability and Clarity: Ensure each RISEN component is articulated with precise language, emphasizes actionability for the AI node, and promotes ease of understanding, eliminating any ambiguity.\n\n\nValidate and Finalize: Review the complete RISEN-based prompt to ensure it is comprehensive, clear, adheres strictly to the RISEN framework, and is optimized for generating exceptional and context-aware AI responses.\n\n\nEnd Goal: Generate a refined, RISEN-based prompt from user input that is highly effective in guiding an AI node to deliver optimal, accurate, and context-aware results fully aligned with the original user intent.\n\nNarrowing of Scope: This task is specifically focused on refining user-provided text prompts via the RISEN framework to enhance their effectiveness for AI nodes. The input is strictly text-based user queries or prompts intended for direct AI interaction."
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        -20,
+        -320
+      ],
+      "id": "9c849fae-4418-43fc-80c1-67580733b2e5",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a highly skilled Prompt Engineer, tasked with converting vague, incomplete, or casual human requests into precise and effective prompts using the RISEN framework. Your output should clearly outline the role, instruction, steps, end goal, and narrowing of scope to ensure the next AI node produces an optimal result.\n\nInstruction\n\nUsing the input: {{ $json.chatInput }} provided by the user, analyze and improve upon the query to create a RISEN-based prompt that is detailed, specific, and actionable.\n\nMaintain clarity and focus, ensuring the resulting prompt uses the RISEN framework effectively. Prioritize user intent and transform it into structured guidance for an AI node.\n\nSteps:\n\n\nInterpret User Input: Thoroughly analyze {{ $json.chatInput }} to deeply understand the core request, nuances, and underlying user intent.\n\n\nApply RISEN Framework: Critically evaluate the interpreted input, focusing on enhancing its Relevance, Intentionality, Specificity, Engagement, and Clarity to maximize AI effectiveness.\n\n\nStructure with RISEN: Systematically organize the refined prompt, explicitly defining each RISEN component: Role, Instruction, Steps, End Goal, and Narrowing of Scope, ensuring logical flow and coherence.\n\n\nRefine for Actionability and Clarity: Ensure each RISEN component is articulated with precise language, emphasizes actionability for the AI node, and promotes ease of understanding, eliminating any ambiguity.\n\n\nValidate and Finalize: Review the complete RISEN-based prompt to ensure it is comprehensive, clear, adheres strictly to the RISEN framework, and is optimized for generating exceptional and context-aware AI responses.\n\n\nEnd Goal: Generate a refined, RISEN-based prompt from user input that is highly effective in guiding an AI node to deliver optimal, accurate, and context-aware results fully aligned with the original user intent.\n\nNarrowing of Scope: This task is specifically focused on refining user-provided text prompts via the RISEN framework to enhance their effectiveness for AI nodes. The input is strictly text-based user queries or prompts intended for direct AI interaction."
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        20,
+        40
+      ],
+      "id": "fdccf1d0-6a06-448f-943b-98d9f4ea0343",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a highly skilled Prompt Engineer, tasked with converting vague, incomplete, or casual human requests into precise and effective prompts using the RISEN framework. Your output should clearly outline the role, instruction, steps, end goal, and narrowing of scope to ensure the next AI node produces an optimal result.\n\nInstruction\n\nUsing the input: {{ $json.chatInput }} provided by the user, analyze and improve upon the query to create a RISEN-based prompt that is detailed, specific, and actionable.\n\nMaintain clarity and focus, ensuring the resulting prompt uses the RISEN framework effectively. Prioritize user intent and transform it into structured guidance for an AI node.\n\nSteps:\n\n\nInterpret User Input: Thoroughly analyze {{ $json.chatInput }} to deeply understand the core request, nuances, and underlying user intent.\n\n\nApply RISEN Framework: Critically evaluate the interpreted input, focusing on enhancing its Relevance, Intentionality, Specificity, Engagement, and Clarity to maximize AI effectiveness.\n\n\nStructure with RISEN: Systematically organize the refined prompt, explicitly defining each RISEN component: Role, Instruction, Steps, End Goal, and Narrowing of Scope, ensuring logical flow and coherence.\n\n\nRefine for Actionability and Clarity: Ensure each RISEN component is articulated with precise language, emphasizes actionability for the AI node, and promotes ease of understanding, eliminating any ambiguity.\n\n\nValidate and Finalize: Review the complete RISEN-based prompt to ensure it is comprehensive, clear, adheres strictly to the RISEN framework, and is optimized for generating exceptional and context-aware AI responses.\n\n\nEnd Goal: Generate a refined, RISEN-based prompt from user input that is highly effective in guiding an AI node to deliver optimal, accurate, and context-aware results fully aligned with the original user intent.\n\nNarrowing of Scope: This task is specifically focused on refining user-provided text prompts via the RISEN framework to enhance their effectiveness for AI nodes. The input is strictly text-based user queries or prompts intended for direct AI interaction."
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        380
+      ],
+      "id": "af1e2add-329d-4830-9535-64f1a42d837d",
+      "name": "Basic LLM Chain2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a highly skilled Prompt Engineer, tasked with converting vague, incomplete, or casual human requests into precise and effective prompts using the RISEN framework. Your output should clearly outline the role, instruction, steps, end goal, and narrowing of scope to ensure the next AI node produces an optimal result.\n\nInstruction\n\nUsing the input: {{ $json.chatInput }} provided by the user, analyze and improve upon the query to create a RISEN-based prompt that is detailed, specific, and actionable.\n\nMaintain clarity and focus, ensuring the resulting prompt uses the RISEN framework effectively. Prioritize user intent and transform it into structured guidance for an AI node.\n\nSteps:\n\n\nInterpret User Input: Thoroughly analyze {{ $json.chatInput }} to deeply understand the core request, nuances, and underlying user intent.\n\n\nApply RISEN Framework: Critically evaluate the interpreted input, focusing on enhancing its Relevance, Intentionality, Specificity, Engagement, and Clarity to maximize AI effectiveness.\n\n\nStructure with RISEN: Systematically organize the refined prompt, explicitly defining each RISEN component: Role, Instruction, Steps, End Goal, and Narrowing of Scope, ensuring logical flow and coherence.\n\n\nRefine for Actionability and Clarity: Ensure each RISEN component is articulated with precise language, emphasizes actionability for the AI node, and promotes ease of understanding, eliminating any ambiguity.\n\n\nValidate and Finalize: Review the complete RISEN-based prompt to ensure it is comprehensive, clear, adheres strictly to the RISEN framework, and is optimized for generating exceptional and context-aware AI responses.\n\n\nEnd Goal: Generate a refined, RISEN-based prompt from user input that is highly effective in guiding an AI node to deliver optimal, accurate, and context-aware results fully aligned with the original user intent.\n\nNarrowing of Scope: This task is specifically focused on refining user-provided text prompts via the RISEN framework to enhance their effectiveness for AI nodes. The input is strictly text-based user queries or prompts intended for direct AI interaction."
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        -40,
+        740
+      ],
+      "id": "aed80e91-b0b7-494f-9c65-0810f67d43fb",
+      "name": "Basic LLM Chain3"
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        780,
+        120
+      ],
+      "id": "abee67b3-d071-4a8c-9544-0fdc565ad1d2",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "ALL",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        140
+      ],
+      "id": "4d430ed1-78a5-4d3e-8e27-05421a71d823",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=answer this question: {{ $('When chat message received').item.json.chatInput }}\nbase of this knowledge:{{ $json.ALL }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1400,
+        140
+      ],
+      "id": "e1f069d4-6c66-4423-afa2-0e6dd895ebac",
+      "name": "Basic LLM Chain4"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        900
+      ],
+      "id": "2a0a2cbd-8ad0-49e7-8516-0b1ba59edc4e",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "6Ac3ZNMwCOsQlXet",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        540
+      ],
+      "id": "ba4cadbb-d6de-45fc-bf58-1f83bfcad6c4",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "GdNzfVr0aexSJQq5",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmCohere",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        -40
+      ],
+      "id": "ec355866-da92-40a5-92d6-cac578aa4b52",
+      "name": "Cohere Model",
+      "credentials": {
+        "cohereApi": {
+          "id": "Dpn5p3LKIkPnIfnM",
+          "name": "CohereApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        220
+      ],
+      "id": "46eff5e5-7434-49e6-80e1-3efc61e5f908",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "qwWcuRpxr4b0MLqy",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cohere Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b0f93d8c-5953-4329-9269-07e2a83d26d2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fa22f1406ff04789687c1dc673d8cefecf6591bb9422487f786f9b9e44bce041"
+  },
+  "id": "kCl26feh5sIVfaT9",
+  "tags": []
+}
